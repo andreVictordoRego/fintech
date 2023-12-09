@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fintech - Fiap</title>
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- font google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Borel&family=Catamaran:wght@300&family=Inter:wght@300;400;600&family=Montserrat:wght@300&family=Open+Sans:wght@300&family=Poppins:wght@300&display=swap"
+        rel="stylesheet">
+
+    <!-- chamada css bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- chamada do meu css -->
+    <link rel="stylesheet" href="assets/styles/style.css">
+
+    <!-- charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header class="mt-3 mb-3">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <ul class="container-fluid">
+                <span class="fs-1 cor-principal" href="#">Fin<span class="fw-bold">tech</span></span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-3">
+                        <li class="nav-item ms-3">
+                            <a class="nav-link cor-principal" aria-current="page" href="#"><i
+                                    class="fa-solid fa-table-columns me-2"></i>Dashboard</a>
+                        </li>
+                        <li class="nav-item dropdown ms-2">
+                            <a class="nav-link dropdown-toggle cor-principal" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-eye me-2"></i>
+                                Consultas
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item cor-principal" href="#"><i
+                                            class="fa-solid fa-credit-card me-3"></i>Cartões</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item cor-principal" href="#"><i
+                                            class="fa-solid fa-wallet me-3"></i>Contas</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item cor-principal" href="#"><i
+                                            class="fa-solid fa-arrow-trend-up me-3"></i>Investimentos</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item cor-principal" href="#"><i
+                                            class="fa-solid fa-money-bills me-3"></i>Receitas</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item cor-principal" href="#"><i
+                                            class="fa-solid fa-file-invoice-dollar me-3"></i>Despesas</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item cor-principal" href="#"><i
+                                            class="fa-solid fa-bullseye me-3"></i>Objetivos</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item ms-3">
+                            <a class="nav-link cor-principal" href="#"><i
+                                    class="fa-solid fa-book-open me-2"></i>Educação</a>
+                        </li>
+                        <li class="nav-item ms-3">
+                            <a class="nav-link cor-principal" href="#"><i class="fa-solid fa-user me-2"></i>Perfil</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-1" type="search" placeholder="Pesquisa" aria-label="Search">
+                        <button class="btn btn-formulario" type="submit">Buscar</button>
+                    </form>
+                </div>
+
+                </div>
+        </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row me-1">
+            <div class="col-sm-12 col-lg-6 col-xl-3">
+                <div class="container cards m-2 ">
+                    <h5 class="p-3 cards-titulo">Extrato</h5>
+                    <div class="container chart">
+                        <canvas id="myChart">
+                            <script>
+                                // Obtenha o contexto do canvas
+                                var ctx = document.getElementById('myChart').getContext('2d');
+
+                                // Defina os dados do gráfico
+                                var data = {
+                                    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril'],
+                                    datasets: [{
+                                        label: "Extrato",
+                                        backgroundColor: '#265073)',
+                                        borderColor: '#265073',
+                                        borderWidth: 1,
+                                        data: [35, 29, 49, 45],
+                                    }]
+                                };
+
+                                // Configure as opções do gráfico
+                                var options = {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                };
+
+                                // Crie o gráfico de barras
+                                var myChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: data,
+                                    options: options
+                                });
+                            </script>
+
+                        </canvas>
+                        <a href="#" class="ver-mais">Ver mais</a>
+                    </div>
+                    <span class="cards-valor">R$ 102.650,33</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6 col-xl-3">
+                <div class="container cards m-2">
+                    <h5 class="p-3 cards-titulo">Receitas</h5>
+
+
+                    <!-- teste graf -->
+
+                    <div class="container chart">
+                        <canvas id="myChart2">
+                            <script>
+                                // Obtenha o contexto do canvas
+                                var ctx = document.getElementById('myChart2').getContext('2d');
+
+                                // Defina os dados do gráfico
+                                var data = {
+                                    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril'],
+                                    datasets: [{
+                                        label: "Extrato",
+                                        backgroundColor: '#265073)',
+                                        borderColor: '#265073',
+                                        borderWidth: 1,
+                                        data: [65, 59, 80, 45],
+                                    }]
+                                };
+
+                                // Configure as opções do gráfico
+                                var options = {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                };
+
+                                // Crie o gráfico de barras
+                                var myChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: data,
+                                    options: options
+                                });
+                            </script>
+                        </canvas>
+                        <a href="#" class="ver-mais">Ver mais</a>
+                    </div>
+                    <span class="cards-valor">R$ 187.338,87</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6 col-xl-3">
+                <div class="container cards m-2">
+                    <h5 class="p-3 cards-titulo">Despesas</h5>
+                    <div class="container chart">
+                        <canvas id="myChart3">
+                            <script>
+                                // Obtenha o contexto do canvas
+                                var ctx = document.getElementById('myChart3').getContext('2d');
+
+                                // Defina os dados do gráfico
+                                var data = {
+                                    labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril'],
+                                    datasets: [{
+                                        label: "Extrato",
+                                        backgroundColor: '#265073)',
+                                        borderColor: '#265073',
+                                        borderWidth: 1,
+                                        data: [65, 59, 35, 95],
+                                    }]
+                                };
+
+                                // Configure as opções do gráfico
+                                var options = {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                };
+
+                                // Crie o gráfico de barras
+                                var myChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: data,
+                                    options: options
+                                });
+                            </script>
+                        </canvas>
+                        <a href="#" class="ver-mais">Ver mais</a>
+                    </div>
+                    <span class="cards-valor">R$ 84.688,54</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6 col-xl-3">
+                <div class="container cards m-2">
+                    <h5 class="p-3 cards-titulo">Meus Cartões</h5>
+
+
+                    <div class="container-carousel">
+                        <div id="carouselExampleCaptions" class="carousel slide">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
+                                    class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                                    aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                                    aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="assets/images/cartao_colorido.png" class="d-block w-100 imagem-cartao"
+                                        alt="...">
+                                    <div class="carousel-caption d-none d-md-block">
+
+                                    </div>
+                                    <h5 class="titulo-cartao text-center">R$ 5.677,98</h5>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="assets/images/cartao_preto.png" class="d-block w-100 imagem-cartao"
+                                        alt="...">
+                                    <div class="carousel-caption d-none d-md-block">
+                                    </div>
+                                    <h5 class="titulo-cartao text-center">R$ 11.231,55</h5>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="assets/images/cartao_roxo.png" class="d-block w-100 imagem-cartao"
+                                        alt="...">
+                                    <div class="carousel-caption d-none d-md-block">
+                                    </div>
+                                    <h5 class="titulo-cartao text-center">R$ 9.451,10</h5>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container">
+        <div class="row me-1">
+            <div class="col-sm-12 col-lg-12">
+                <div class="container cards m-2">
+                    <h5 class="p-3 cards-titulo">Últimos Lançamentos</h5>
+
+                    <div class="tabela">
+                        <table class="tab-ultimos-lancamentos">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Descrição</th>
+                                    <th>Tipo</th>
+                                    <th>Valor</th>
+                                    <th>Forma</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>01/12/2023</td>
+                                    <td>Salário</td>
+                                    <td class="entrada">Entrada</td>
+                                    <td>R$ 5.000,00</td>
+                                    <td>Conta Corrente</td>
+                                </tr>
+                                <tr>
+                                    <td>05/12/2023</td>
+                                    <td>Compra no Supermercado</td>
+                                    <td class="saida">Saída</td>
+                                    <td>R$ 200,00</td>
+                                    <td>Cartão de Crédito</td>
+                                </tr>
+                                <tr>
+                                    <td>09/12/2023</td>
+                                    <td>Aluguel</td>
+                                    <td class="saida">Saída</td>
+                                    <td>R$ 1.200,00</td>
+                                    <td>Boleto</td>
+                                </tr>
+                                <tr>
+                                    <td>15/12/2023</td>
+                                    <td>Restaurante</td>
+                                    <td class="saida">Saída</td>
+                                    <td>R$ 50,00</td>
+                                    <td>Dinheiro</td>
+                                </tr>
+                                <tr>
+                                    <td>20/12/2023</td>
+                                    <td>Venda de Patrimonio</td>
+                                    <td class="entrada">Entrada</td>
+                                    <td>R$ 3.000,00</td>
+                                    <td>Transferência Bancária</td>
+                                </tr>
+                                <tr>
+                                    <td>25/12/2023</td>
+                                    <td>Presentes de Natal</td>
+                                    <td class="saida">Saída</td>
+                                    <td>R$ 150,00</td>
+                                    <td>Cartão de Débito</td>
+                                </tr>
+                                <tr>
+                                    <td>28/12/2023</td>
+                                    <td>Assinatura Mensal</td>
+                                    <td class="saida">Saída</td>
+                                    <td>R$ 9,99</td>
+                                    <td>Cartão de Crédito</td>
+                                </tr>
+                                <tr>
+                                    <td>30/12/2023</td>
+                                    <td>Depósito em Dinheiro</td>
+                                    <td class="entrada">Entrada</td>
+                                    <td>R$ 300,00</td>
+                                    <td>Dinheiro</td>
+                                </tr>
+                                <tr>
+                                    <td>02/01/2024</td>
+                                    <td>Pagamento de Conta de Luz</td>
+                                    <td class="saida">Saída</td>
+                                    <td>R$ 120,00</td>
+                                    <td>Boleto</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="#" class="ver-mais mb-4">Ver mais</a>
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container">
+        <div class="row me-1">
+            <div class="col-sm-12 col-lg-8">
+                <div class="container cards m-2">
+                    <h5 class="p-3 cards-titulo">Objetivos</h5>
+
+                    <div class="chart-container">
+                        <div class="goal">
+                            <div class="goal-name">Carro Novo</div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 60%;"></div>
+                            </div>
+                            <div class="label">60%</div>
+                        </div>
+
+                        <div class="goal">
+                            <div class="goal-name">Aposentadoria</div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 15%;"></div>
+                            </div>
+                            <div class="label">15%</div>
+                        </div>
+
+                        <div class="goal">
+                            <div class="goal-name">Viagem para Paris</div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 60%;"></div>
+                            </div>
+                            <div class="label">60%</div>
+                        </div>
+
+                        <div class="goal">
+                            <div class="goal-name">Reserva de Emergência</div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 80%;"></div>
+                            </div>
+                            <div class="label">80%</div>
+                        </div>
+
+                        <div class="goal">
+                            <div class="goal-name">Faculdade dos Filhos</div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 7%;"></div>
+                            </div>
+                            <div class="label">7%</div>
+                        </div>
+
+                        <div class="goal">
+                            <div class="goal-name">Eliminar Dividas</div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 95%;"></div>
+                            </div>
+                            <div class="label">95%</div>
+                        </div>
+                        <a href="#" class="ver-mais mb-4">Ver mais</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-lg-4">
+                <div class="container cards m-2">
+                    <h5 class="p-3 cards-titulo">Educação</h5>
+                    <p class="cor-principal">Desbrave o caminho da estabilidade financeira! Aprenda a organizar suas
+                        finanças para conquistar seus objetivos.</p>
+                    <a class="ver-mais mb-4" href="#">Comece hoje mesmo!</a>
+                    <figure>
+                        <img class="imagem-educacao" src="assets/images/foto_educacional.jpg" alt="foto educacional">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <button class="btn btn-fixed btn-float" type="submit"><i class="fa-solid fa-plus adc-btn"></i></button> -->
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-fixed btn-float" data-bs-toggle="modal"
+        data-bs-target="#exampleModal"><i class="fa-solid fa-plus adc-btn"></i></button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="titulo-modal" id="exampleModalLabel">Novo Lançamento</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="modal-form">
+                        <fieldset>
+                            <label for="numero"></label>
+                            <input type="number" name="numero" id="numero" min="0" max="1000000000" step="50"
+                                placeholder="Digite o valor da transação" class="input-valor">
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="tipo-entrada">
+                                <input type="radio" id="opcao1" name="opcoes" value="opcao1" checked>
+                                <label class="btn-radio" for="opcao1">Receita</label>
+                                <input type="radio" id="opcao2" name="opcoes" value="opcao2">
+                                <label for="opcao2" class="btn-radio">Despesa</label>
+                            </div>
+                        </fieldset>
+
+                        <section class="opcoes">
+                            <nav>
+                                <ul class="lista-opcoes">
+                                    <li class="botao-opcoes"><i class="fa-solid fa-calendar-days icone-opcoes"></i></li>
+                                    <li class="botao-opcoes"><a class="links-opcoes" href="#">Hoje</a></li>
+                                    <li class="botao-opcoes"><a class="links-opcoes" href="#">Ontem</a></li>
+                                    <li class="botao-opcoes"><a class="links-opcoes" href="#">Outro</a></li>
+                                </ul>
+                            </nav>
+                            <fieldset class="fs-descricao">
+                                <label for="descricao"><i class="fa-regular fa-file icone-opcoes"></i></label>
+                                <textarea name="mensagem" id="mensagem" placeholder="Descrição"
+                                    class="descricao"></textarea>
+                            </fieldset>
+
+                            <fieldset class="fs-descricao">
+                                <label for="categoria"><i class="fa-solid fa-icons icone-opcoes"></i></label>
+                                <select name="categoria" id="categoria">
+                                    <option value="1" disabled selected>Selecione uma categoria</option>
+                                    <option value="2">Opção #1</option>
+                                    <option value="3">Opção #2</option>
+                                    <option value="4">Opção #3</option>
+                                    <option value="5">Opção #4</option>
+                                </select>
+                            </fieldset>
+
+                            <fieldset class="fs-descricao">
+                                <label for="conta"><i class="fa-solid fa-building-columns icone-opcoes"></i></label>
+                                <select name="conta" id="conta">
+                                    <option value="1" disabled selected>Selecione uma conta</option>
+                                    <option value="2">Opção #1</option>
+                                    <option value="3">Opção #2</option>
+                                    <option value="4">Opção #3</option>
+                                    <option value="5">Opção #4</option>
+                                </select>
+                            </fieldset>
+
+                            <fieldset class="fs-descricao"> 
+                                <label for="" class=""><i class="fa-regular fa-image icone-opcoes"></i></label>
+                                <input type="button" class="btn-upload" value="Enviar foto">                          
+                            </fieldset>
+
+                        </section>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal" type="button" class="btn btn-formulario" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-formulario">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer class="footer">
+        <ul class="lista-footer">
+            <li>Desenvolvido por André Victor do Rego - RM 553232</li>
+            <li>Instituição FIAP - Faculdade de Informática e Administração Paulista</li>
+            <li>Curso de Análise e Desenvolvimento de Sistemas</li>
+        </ul>
+    </footer>
+
+
+    <!-- chamada javascript bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- chamada javascript -->
+    <script src="assets/js/scripts.js"></script>
+
+
+</body>
+
+</html>
